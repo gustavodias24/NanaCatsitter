@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.WindowManager;
 
@@ -26,5 +27,14 @@ public class MainActivity extends AppCompatActivity {
 
         //configurar a logo
         Picasso.get().load(R.raw.logo).into(mainBinding.logo);
+
+
+        mainBinding.cadastrar.setOnClickListener(view -> {
+            startActivity(new Intent(getApplicationContext(), CadastroActivity.class));
+        });
+
+        mainBinding.entrar.setOnClickListener( view -> {
+            startActivity(new Intent(getApplicationContext(), AreaPrincipalActivity.class));
+        });
     }
 }
