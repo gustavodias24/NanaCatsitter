@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "926919297781",
+    "project_id": "nana-catsitter-f4d22",
+    "storage_bucket": "nana-catsitter-f4d22.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:926919297781:android:340328bef56e0e0a1c53bc",
+        "android_client_info": {
+          "package_name": "benicio.soluces.nanacatsitter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATzyOc8eMH_x3o8C8kMTDwSa6RchgkXD8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

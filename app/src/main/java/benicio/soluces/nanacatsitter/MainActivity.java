@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -14,6 +16,7 @@ import benicio.soluces.nanacatsitter.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding mainBinding;
+    private SharedPreferences preferences;
 
     @SuppressLint("ResourceType")
     @Override
@@ -36,5 +39,13 @@ public class MainActivity extends AppCompatActivity {
         mainBinding.entrar.setOnClickListener( view -> {
             startActivity(new Intent(getApplicationContext(), AreaPrincipalActivity.class));
         });
+
+        preferences = getSharedPreferences("usuario", MODE_PRIVATE);
+
+        if ( !preferences.getString("idUsuario", "").isEmpty()){
+            Toast.makeText(this, "Bem-vindo de volta!", Toast.LENGTH_SHORT).show();
+            finish();
+            startActivity(new Intent(getApplicationContext(), AreaPrincipalActivity.class));
+        }
     }
 }
