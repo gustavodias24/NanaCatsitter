@@ -10,22 +10,34 @@ public class AgendamentoModel {
     public String toString() {
 
         String isCastrado = castrado ? "sim" : "Não";
+        String msgStatus = "";
+        switch (status){
+            case 0:
+                msgStatus = "Aguardando Resposta...";
+                break;
+            case 1:
+                msgStatus = "Recusado!";
+                break;
+            default:
+                msgStatus = "Agendado!";
+        }
         return
-                "castrado: " + isCastrado +
-                "horario: " + horario + '\n' +
-                "data: " + data + '\n' +
-                "quaisDias: " + quaisDias + '\n' +
-                "nomeVeterinario: " + nomeVeterinario + '\n' +
-                "telefoneVeterinario: " + telefoneVeterinario + '\n' +
-                "ultimaVacinacao: " + ultimaVacinacao + '\n' +
-                "doenca:'" + doenca + '\n' +
-                "medicacao: " + medicacao + '\n' +
-                "petisco: " + petisco + '\n' +
-                "restricao: " + restricao + '\n' +
-                "brincadeira: " + brincadeira + '\n' +
-                "comerInadequado: " + comerInadequado + '\n' +
-                "medo: " + medo + '\n' +
-                "arranha: " + arranha;
+                "Status: " + msgStatus  + '\n'+
+                "Castrado: " + isCastrado +
+                "Horário: " + horario + '\n' +
+                "Data: " + data + '\n' +
+                "Quais dias: " + quaisDias + '\n' +
+                "Nome do veterinário: " + nomeVeterinario + '\n' +
+                "Telefone do veterinário: " + telefoneVeterinario + '\n' +
+                "última vacinação: " + ultimaVacinacao + '\n' +
+                "Doença:'" + doenca + '\n' +
+                "Medicação: " + medicacao + '\n' +
+                "Petisco: " + petisco + '\n' +
+                "Restrição: " + restricao + '\n' +
+                "Brincadeira: " + brincadeira + '\n' +
+                "Comida inadequada: " + comerInadequado + '\n' +
+                "Medo: " + medo + '\n' +
+                "Agreção: " + arranha;
     }
 
     public String getIdUsuario() {
