@@ -79,6 +79,8 @@ public class CadastroActivity extends AppCompatActivity {
     
     private void cadastrarDatabase(UsuarioModel usuarioModel){
         String id_usuario = Base64.getEncoder().encodeToString(usuarioModel.getLogin().getBytes());
+
+        usuarioModel.setToken(id_usuario);
         refUsuairos.child(id_usuario).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
