@@ -14,6 +14,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Base64;
+import java.util.UUID;
+
 import benicio.soluces.nanacatsitter.databinding.ActivityAreaPrincipalBinding;
 import benicio.soluces.nanacatsitter.databinding.ActivityCriarAgendamentoBinding;
 import benicio.soluces.nanacatsitter.model.AgendamentoModel;
@@ -102,7 +105,10 @@ public class CriarAgendamentoActivity extends AppCompatActivity {
     
     private void cadastrarAgendamento( AgendamentoModel agendamentoModel){
         Toast.makeText(this, "Aguarde...", Toast.LENGTH_SHORT).show();
-        refAgendamentos.push().setValue(
+
+        String id = UUID.randomUUID().toString();
+        agendamentoModel.setId(id);
+        refAgendamentos.child(id).setValue(
                 agendamentoModel
         ).addOnCompleteListener(task -> {
             if ( task.isSuccessful() ){

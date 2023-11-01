@@ -2,6 +2,7 @@ package benicio.soluces.nanacatsitter.model;
 
 public class AgendamentoModel {
     String idUsuario;
+    String id;
     int status;
     boolean castrado;
     String horario, data, quaisDias, nomeVeterinario, telefoneVeterinario, ultimaVacinacao, doenca,medicacao, petisco, restricao, brincadeira, comerInadequado, medo, arranha;
@@ -38,6 +39,14 @@ public class AgendamentoModel {
                 "Comida inadequada: " + comerInadequado + '\n' +
                 "Medo: " + medo + '\n' +
                 "Agreção: " + arranha;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getIdUsuario() {
