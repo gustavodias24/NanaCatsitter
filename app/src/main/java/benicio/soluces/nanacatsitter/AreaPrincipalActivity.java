@@ -12,6 +12,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.google.firebase.database.DataSnapshot;
@@ -32,6 +35,7 @@ public class AreaPrincipalActivity extends AppCompatActivity {
 
     private ActivityAreaPrincipalBinding mainBinding;
     private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
     private RecyclerView r;
     private AdapterAgendamento adapter;
     private List<AgendamentoModel> listaAgendamento = new ArrayList<>();
@@ -45,6 +49,7 @@ public class AreaPrincipalActivity extends AppCompatActivity {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         preferences = getSharedPreferences("usuario", MODE_PRIVATE);
+        editor = preferences.edit();
 
         // confirurar toolbar
         getSupportActionBar().setTitle("Agendamentos");
@@ -56,6 +61,28 @@ public class AreaPrincipalActivity extends AppCompatActivity {
         // configuração da listagem
         configurarRecycler();
         configurarListenerAgendamento();
+
+        if( preferences.getString("idUsuario", "").equals("YWRtaW4=") ){
+            mainBinding.addAgendamento.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_principal, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if ( item.getItemId() == R.id.sair){
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            finish();
+            editor.putString("idUsuario", "");
+            editor.apply();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void configurarRecycler(){
@@ -79,7 +106,9 @@ public class AreaPrincipalActivity extends AppCompatActivity {
                     assert agendamento != null;
                     if ( preferences.getString("idUsuario", "").equals("YWRtaW4=") ||
                             agendamento.getIdUsuario().equals(preferences.getString("idUsuario", ""))){
-                        listaAgendamento.add(agendamento);
+                        if ( agendamento.getStatus() != 1){
+                            listaAgendamento.add(agendamento);
+                        }
                     }
                 }
 
@@ -87,6 +116,8 @@ public class AreaPrincipalActivity extends AppCompatActivity {
 
                 if ( !listaAgendamento.isEmpty()){
                     mainBinding.textWarning.setVisibility(View.GONE);
+                }else{
+                    mainBinding.textWarning.setVisibility(View.VISIBLE);
                 }
             }
             @Override
