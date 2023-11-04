@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -74,6 +75,14 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), AreaPrincipalActivity.class));
         }
 
+        mainBinding.esqueiSenha.setOnClickListener( view -> {
+            startActivity(
+                    new Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("https://wa.me/55879881572689?text=Ol%C3%A1,%20gostaria%20de%20trocar%20minha%20senha%20do%20aplicativo%20Nana%20Cat%20Sitter")
+                    )
+            );
+        });
     }
 
     private void fazerLogin(String idUsuario, String senha){

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -24,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import benicio.soluces.nanacatsitter.adapter.AdapterAgendamento;
@@ -64,6 +66,7 @@ public class AreaPrincipalActivity extends AppCompatActivity {
 
         if( preferences.getString("idUsuario", "").equals("YWRtaW4=") ){
             mainBinding.addAgendamento.setVisibility(View.GONE);
+            mainBinding.contatobtn.setVisibility(View.GONE);
         }
     }
 
@@ -125,5 +128,35 @@ public class AreaPrincipalActivity extends AppCompatActivity {
 
             }
         });
+
+        mainBinding.contatobtn.setOnClickListener(view -> {
+            startActivity(
+                    new Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("https://wa.me/55879881572689")
+                    )
+            );
+        });
+
+        mainBinding.saudacaotext.setText(
+                saudacaoDoDia()
+        );
     }
+
+    private String saudacaoDoDia() {
+        Calendar cal = Calendar.getInstance();
+        int hora = cal.get(Calendar.HOUR_OF_DAY);
+
+        String saudacao = "";
+        if (hora >= 6 && hora < 12) {
+            saudacao = "Bom dia!";
+        } else if (hora >= 12 && hora < 18) {
+            saudacao = "Boa tarde!";
+        } else {
+            saudacao = "Boa noite!";
+        }
+
+        return saudacao;
+    }
+
 }

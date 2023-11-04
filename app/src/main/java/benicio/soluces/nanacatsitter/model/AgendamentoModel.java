@@ -19,8 +19,11 @@ public class AgendamentoModel {
             case 1:
                 msgStatus = "Recusado!";
                 break;
-            default:
+            case 2:
                 msgStatus = "Agendado!";
+                break;
+            default:
+                msgStatus = "Concluído!";
         }
         return
                 "Status: " + msgStatus  + '\n'+

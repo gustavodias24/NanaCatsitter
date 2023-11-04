@@ -3,6 +3,8 @@ package benicio.soluces.nanacatsitter.model;
 public class UsuarioModel {
     String login, senha, endereco, nomeGato, idadeGato, whatsapp;
     String token;
+    int moedas = 0;
+
     public UsuarioModel(String login, String senha, String endereco, String nomeGato, String idadeGato, String whatsapp) {
         this.login = login;
         this.senha = senha;
@@ -69,5 +71,13 @@ public class UsuarioModel {
 
     public void setWhatsapp(String whatsapp) {
         this.whatsapp = whatsapp;
+    }
+
+    public int getMoedas() {
+        return moedas;
+    }
+
+    public void setMoedas(int moedas) {
+        this.moedas = moedas;
     }
 }
