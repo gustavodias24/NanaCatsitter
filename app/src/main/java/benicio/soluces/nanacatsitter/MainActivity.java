@@ -79,10 +79,11 @@ public class MainActivity extends AppCompatActivity {
             startActivity(
                     new Intent(
                             Intent.ACTION_VIEW,
-                            Uri.parse("https://wa.me/55879881572689?text=Ol%C3%A1,%20gostaria%20de%20trocar%20minha%20senha%20do%20aplicativo%20Nana%20Cat%20Sitter")
+                            Uri.parse("https://wa.me/5587981572689?text=Ol%C3%A1,%20gostaria%20de%20trocar%20minha%20senha%20do%20aplicativo%20Nana%20Cat%20Sitter")
                     )
             );
         });
+
     }
 
     private void fazerLogin(String idUsuario, String senha){
