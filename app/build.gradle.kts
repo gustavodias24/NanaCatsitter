@@ -36,6 +36,7 @@ android {
 
 dependencies {
 
+    implementation("com.github.clans:fab:1.6.4")
     implementation("com.squareup.picasso:picasso:2.8")
     implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.28")
     implementation("androidx.appcompat:appcompat:1.6.1")
