@@ -28,6 +28,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:foregroundGravity="center_vertical"
+        android:gravity="center"
         android:orientation="vertical"
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -39,7 +41,9 @@
             android:id="@+id/recyclerProdutos"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_gravity="center|center_horizontal|center_vertical"
             android:layout_margin="8dp"
+            android:foregroundGravity="center_vertical|center|center_horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ir_para_o_app" />
