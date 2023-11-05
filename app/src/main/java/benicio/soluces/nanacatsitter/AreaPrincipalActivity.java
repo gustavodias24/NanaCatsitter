@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 import benicio.soluces.nanacatsitter.adapter.AdapterAgendamento;
 import benicio.soluces.nanacatsitter.adapter.BannerAdapter;
@@ -41,6 +42,7 @@ import benicio.soluces.nanacatsitter.databinding.ActivityAreaPrincipalBinding;
 import benicio.soluces.nanacatsitter.databinding.ActivityCadastroBinding;
 import benicio.soluces.nanacatsitter.databinding.TrocarSenhaLayoutBinding;
 import benicio.soluces.nanacatsitter.model.AgendamentoModel;
+import benicio.soluces.nanacatsitter.model.BannerModel;
 import benicio.soluces.nanacatsitter.model.UsuarioModel;
 
 public class AreaPrincipalActivity extends AppCompatActivity {
@@ -55,6 +57,7 @@ public class AreaPrincipalActivity extends AppCompatActivity {
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference refAgendamentos = database.getReference().child("agendamentos");
     private DatabaseReference refUsuarios = database.getReference().child("usuarios");
+    private DatabaseReference refbanners = database.getReference().child("banners");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +89,9 @@ public class AreaPrincipalActivity extends AppCompatActivity {
         mainBinding.trocarSenha.setOnClickListener( view -> {
             dialogTrocarSenha.show();
         });
+        mainBinding.banners.setOnClickListener( view ->{
+            startActivity(new Intent(getApplicationContext(), BannersActivity.class));
+        });
         mainBinding.produtos.setOnClickListener( view -> {
             startActivity(new Intent(getApplicationContext(), LojaActivity.class));
         });
@@ -96,27 +102,42 @@ public class AreaPrincipalActivity extends AppCompatActivity {
     }
 
     private void configurarBanner(){
-        List<String> imageUrls = new ArrayList<>();
-        imageUrls.add("https://www.petz.com.br/blog//wp-content/uploads/2021/11/enxoval-para-gato-Copia.jpg");
-        imageUrls.add("https://chefbob.com.br/wp-content/uploads/2021/05/2021-05-12-como-deixar-os-gatos-mais-tranquilos.jpg");
-        imageUrls.add("https://www.petsupport.com.br/wp-content/uploads/2021/09/necessidades-dos-gatos-1.jpg");
-        ViewPager viewPager = mainBinding.viewPager;
-        BannerAdapter bannerAdapter = new BannerAdapter(this, imageUrls);
-        viewPager.setAdapter(bannerAdapter);
-
-        viewPager.postDelayed(new Runnable() {
+        refbanners.addValueEventListener(new ValueEventListener() {
             @Override
-            public void run() {
-                int currentItem = viewPager.getCurrentItem();
-                int totalItems = bannerAdapter.getCount();
-                if (currentItem < totalItems - 1) {
-                    viewPager.setCurrentItem(currentItem + 1);
-                } else {
-                    viewPager.setCurrentItem(0);
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if ( snapshot.exists() ){
+                    List<String> imageUrls = new ArrayList<>();
+
+                    for ( DataSnapshot dado : snapshot.getChildren()){
+                        imageUrls.add(Objects.requireNonNull(dado.getValue(BannerModel.class)).getUrlBanner());
+                    }
+
+                    ViewPager viewPager = mainBinding.viewPager;
+                    BannerAdapter bannerAdapter = new BannerAdapter(getApplicationContext(), imageUrls);
+                    viewPager.setAdapter(bannerAdapter);
+
+                    viewPager.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            int currentItem = viewPager.getCurrentItem();
+                            int totalItems = bannerAdapter.getCount();
+                            if (currentItem < totalItems - 1) {
+                                viewPager.setCurrentItem(currentItem + 1);
+                            } else {
+                                viewPager.setCurrentItem(0);
+                            }
+                            viewPager.postDelayed(this, 3000); // 3000 milissegundos (3 segundos)
+                        }
+                    }, 3000);
                 }
-                viewPager.postDelayed(this, 3000); // 3000 milissegundos (3 segundos)
             }
-        }, 3000);
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -229,6 +229,14 @@
         fab:menu_showShadow="true">
 
         <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/banners"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_crop_16_9_24"
+            fab:fab_label="Banners"
+            fab:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
             android:id="@+id/trocarSenha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

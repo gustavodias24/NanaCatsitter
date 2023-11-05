@@ -15,9 +15,14 @@
         android:theme="@style/Theme.NanaCatsitter"
         tools:targetApi="31">
         <activity
-            android:name=".MoedasActivity"
+            android:name=".BannersActivity"
+            android:exported="false"
             android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar"
-            android:exported="false" />
+            />
+        <activity
+            android:name=".MoedasActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar" />
         <activity
             android:name=".CarrinhoActivity"
             android:exported="false"
