@@ -137,7 +137,7 @@ public class LojaActivity extends AppCompatActivity {
         recyclerProdutos.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerProdutos.setHasFixedSize(true);
         recyclerProdutos.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
-        adapterProduto = new AdapterProduto(produtos, getApplicationContext(), isAdm, this, false);
+        adapterProduto = new AdapterProduto(produtos, getApplicationContext(), isAdm, this, false, false);
         recyclerProdutos.setAdapter(adapterProduto);
 
     }

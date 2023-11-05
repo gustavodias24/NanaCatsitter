@@ -229,6 +229,16 @@
         fab:menu_showShadow="true">
 
         <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/filtrar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_filter_list_24"
+            fab:fab_label="Filtrar por nome"
+            fab:fab_size="mini" />
+
+
+
+        <com.github.clans.fab.FloatingActionButton
             android:id="@+id/banners"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

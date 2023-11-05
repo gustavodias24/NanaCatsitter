@@ -1,7 +1,7 @@
 package benicio.soluces.nanacatsitter.model;
 
 public class AgendamentoModel {
-    String idUsuario;
+    String idUsuario, nomeUsuario;
     String id;
     int status;
     boolean castrado;
@@ -26,8 +26,9 @@ public class AgendamentoModel {
                 msgStatus = "Concluído!";
         }
         return
+                "Nome: " +  nomeUsuario + '\n' +
                 "Status: " + msgStatus  + '\n'+
-                "Castrado: " + isCastrado +
+                "Castrado: " + isCastrado + '\n' +
                 "Horário: " + horario + '\n' +
                 "Data: " + data + '\n' +
                 "Quais dias: " + quaisDias + '\n' +
@@ -186,5 +187,13 @@ public class AgendamentoModel {
 
     public void setArranha(String arranha) {
         this.arranha = arranha;
+    }
+
+    public String getNomeUsuario() {
+        return nomeUsuario;
+    }
+
+    public void setNomeUsuario(String nomeUsuario) {
+        this.nomeUsuario = nomeUsuario;
     }
 }

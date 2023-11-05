@@ -118,7 +118,7 @@ public class CarrinhoActivity extends AppCompatActivity {
         if ( produtos.isEmpty()) {
             mainBinding.limpar.setVisibility(View.GONE);
         }
-        adapter = new AdapterProduto(produtos, getApplication(), false, this, true);
+        adapter = new AdapterProduto(produtos, getApplication(), false, this, true, false);
         r.setAdapter(adapter);
     }
 

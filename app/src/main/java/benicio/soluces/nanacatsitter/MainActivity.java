@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         if ( !preferences.getString("idUsuario", "").isEmpty()){
             Toast.makeText(this, "Bem-vindo de volta!", Toast.LENGTH_SHORT).show();
             finish();
-            startActivity(new Intent(getApplicationContext(), AreaPrincipalActivity.class));
+            startActivity(new Intent(getApplicationContext(), AreaUsuairoActivity.class));
         }
 
         mainBinding.esqueiSenha.setOnClickListener( view -> {
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                         finish();
                         editor.putString("idUsuario", idUsuario);
                         editor.apply();
-                        startActivity(new Intent(getApplicationContext(), AreaPrincipalActivity.class));
+                        startActivity(new Intent(getApplicationContext(), AreaUsuairoActivity.class));
                     }else{
                         Toast.makeText(MainActivity.this, "Senha inválida!", Toast.LENGTH_SHORT).show();
                     }

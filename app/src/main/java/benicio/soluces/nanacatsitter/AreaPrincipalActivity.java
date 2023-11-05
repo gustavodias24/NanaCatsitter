@@ -20,6 +20,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -40,14 +42,15 @@ import benicio.soluces.nanacatsitter.adapter.AdapterAgendamento;
 import benicio.soluces.nanacatsitter.adapter.BannerAdapter;
 import benicio.soluces.nanacatsitter.databinding.ActivityAreaPrincipalBinding;
 import benicio.soluces.nanacatsitter.databinding.ActivityCadastroBinding;
+import benicio.soluces.nanacatsitter.databinding.AdicionarBannerBinding;
 import benicio.soluces.nanacatsitter.databinding.TrocarSenhaLayoutBinding;
 import benicio.soluces.nanacatsitter.model.AgendamentoModel;
 import benicio.soluces.nanacatsitter.model.BannerModel;
 import benicio.soluces.nanacatsitter.model.UsuarioModel;
 
 public class AreaPrincipalActivity extends AppCompatActivity {
-
-    private Dialog dialogTrocarSenha;
+    private Boolean listeneTodos = true;
+    private Dialog dialogTrocarSenha, dialogFiltro;
     private ActivityAreaPrincipalBinding mainBinding;
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
@@ -95,10 +98,13 @@ public class AreaPrincipalActivity extends AppCompatActivity {
         mainBinding.produtos.setOnClickListener( view -> {
             startActivity(new Intent(getApplicationContext(), LojaActivity.class));
         });
+        mainBinding.filtrar.setOnClickListener( view -> {
+            dialogFiltro.show();
+        });
 
         configurarMenu();
-
         configurarBanner();
+        configurarDialogFiltro();
     }
 
     private void configurarBanner(){
@@ -169,29 +175,32 @@ public class AreaPrincipalActivity extends AppCompatActivity {
     }
 
     private void configurarListenerAgendamento(){
-        refAgendamentos.addValueEventListener(new ValueEventListener() {
+
+         refAgendamentos.addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                listaAgendamento.clear();
+                if ( listeneTodos ){
+                    listaAgendamento.clear();
 
-                for ( DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    AgendamentoModel agendamento = dataSnapshot.getValue(AgendamentoModel.class);
-                    assert agendamento != null;
-                    if ( preferences.getString("idUsuario", "").equals("YWRtaW4=") ||
-                            agendamento.getIdUsuario().equals(preferences.getString("idUsuario", ""))){
-                        if ( agendamento.getStatus() != 1){
-                            listaAgendamento.add(agendamento);
+                    for ( DataSnapshot dataSnapshot : snapshot.getChildren()){
+                        AgendamentoModel agendamento = dataSnapshot.getValue(AgendamentoModel.class);
+                        assert agendamento != null;
+                        if ( preferences.getString("idUsuario", "").equals("YWRtaW4=") ||
+                                agendamento.getIdUsuario().equals(preferences.getString("idUsuario", ""))){
+                            if ( agendamento.getStatus() != 1){
+                                listaAgendamento.add(agendamento);
+                            }
                         }
                     }
-                }
 
-                adapter.notifyDataSetChanged();
+                    adapter.notifyDataSetChanged();
 
-                if ( !listaAgendamento.isEmpty()){
-                    mainBinding.textWarning.setVisibility(View.GONE);
-                }else{
-                    mainBinding.textWarning.setVisibility(View.VISIBLE);
+                    if ( !listaAgendamento.isEmpty()){
+                        mainBinding.textWarning.setVisibility(View.GONE);
+                    }else{
+                        mainBinding.textWarning.setVisibility(View.VISIBLE);
+                    }
                 }
             }
             @Override
@@ -283,6 +292,72 @@ public class AreaPrincipalActivity extends AppCompatActivity {
             finish();
             startActivity(new Intent(getApplicationContext(), MoedasActivity.class));
         });
+    }
+
+    private  void configurarDialogFiltro(){
+        AlertDialog.Builder b = new AlertDialog.Builder(AreaPrincipalActivity.this);
+
+        b.setTitle("Filtro");
+        b.setMessage("Clique no agende para ver todos novamente.");
+        AdicionarBannerBinding binding = AdicionarBannerBinding.inflate(getLayoutInflater());
+
+        EditText filtro = binding.urlField.getEditText();
+        binding.urlField.setHint("Filtro");
+        Button button = binding.inserir;
+        button.setText("filtrar");
+
+        button.setOnClickListener( view -> {
+            String filtroString = filtro.getText().toString();
+
+            if ( filtroString.isEmpty() ){
+                listeneTodos = true;
+            }else{
+                listeneTodos = false;
+                refAgendamentos.addValueEventListener(new ValueEventListener() {
+                    @SuppressLint("NotifyDataSetChanged")
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        if ( !listeneTodos ){
+                            listaAgendamento.clear();
+
+                            for ( DataSnapshot dataSnapshot : snapshot.getChildren()){
+                                AgendamentoModel agendamento = dataSnapshot.getValue(AgendamentoModel.class);
+                                assert agendamento != null;
+                                if ( agendamento.getNomeUsuario().toLowerCase().trim().equals(filtroString) ){
+                                    assert agendamento != null;
+                                    if ( preferences.getString("idUsuario", "").equals("YWRtaW4=") ||
+                                            agendamento.getIdUsuario().equals(preferences.getString("idUsuario", ""))){
+                                        if ( agendamento.getStatus() != 1){
+                                            listaAgendamento.add(agendamento);
+                                        }
+                                    }
+                                }
+                            }
+
+                            adapter.notifyDataSetChanged();
+
+                            if ( !listaAgendamento.isEmpty()){
+                                Toast.makeText(AreaPrincipalActivity.this, listaAgendamento.size() + " resultados encontrados", Toast.LENGTH_SHORT).show();
+                                mainBinding.textWarning.setVisibility(View.GONE);
+                            }else{
+                                Toast.makeText(AreaPrincipalActivity.this, "Nada encontrado com filtro " + filtroString, Toast.LENGTH_SHORT).show();
+                                mainBinding.textWarning.setVisibility(View.VISIBLE);
+                            }
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        });
+
+
+        b.setView(binding.getRoot());
+        dialogFiltro = b.create();
+
     }
 
 }

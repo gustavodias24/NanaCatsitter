@@ -11,6 +11,35 @@
     android:layout_height="match_parent"
     tools:context=".CriarAgendamentoActivity">
 
+    <com.google.android.material.textfield.TextInputLayout
+        app:boxCornerRadiusBottomEnd="20dp"
+        app:boxCornerRadiusBottomStart="20dp"
+        app:boxCornerRadiusTopEnd="20dp"
+        app:boxCornerRadiusTopStart="20dp"
+        android:id="@+id/nome_field"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:hint="Nome"
+        android:textColorHint="#FFFFFF"
+        app:hintTextColor="#FFFEFE"
+        app:passwordToggleEnabled="false"
+        app:placeholderTextColor="#000000"
+        app:startIconTint="#000000"
+        app:suffixTextColor="#000000">
+
+        <com.google.android.material.textfield.TextInputEditText
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
+            android:backgroundTint="#F08087"
+            android:backgroundTintMode="src_over"
+            android:inputType="text"
+            android:textColorHint="#FFFFFF" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         app:boxCornerRadiusBottomEnd="20dp"

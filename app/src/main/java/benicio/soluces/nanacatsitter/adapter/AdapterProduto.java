@@ -47,12 +47,15 @@ public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHo
 
     Boolean isCarrinho;
 
-    public AdapterProduto(List<ProdutoModel> produtos, Context c, Boolean isAdm, Activity a, Boolean isCarrinho) {
+    Boolean noButon;
+
+    public AdapterProduto(List<ProdutoModel> produtos, Context c, Boolean isAdm, Activity a, Boolean isCarrinho, Boolean noButon) {
         this.produtos = produtos;
         this.c = c;
         this.isAdm = isAdm;
         this.a = a;
         this.isCarrinho = isCarrinho;
+        this.noButon = noButon;
     }
 
     @NonNull
@@ -103,6 +106,12 @@ public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHo
 
         if ( isCarrinho ){
             holder.layoutAdm.setVisibility(View.GONE);
+            holder.carrinho.setVisibility(View.GONE);
+        }
+
+        if ( noButon ){
+            holder.layoutAdm.setVisibility(View.GONE);
+            holder.carrinho.setVisibility(View.GONE);
             holder.carrinho.setVisibility(View.GONE);
         }
     }

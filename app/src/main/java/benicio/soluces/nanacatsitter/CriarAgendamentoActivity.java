@@ -46,7 +46,11 @@ public class CriarAgendamentoActivity extends AppCompatActivity {
             
             agendamentoModel.setStatus(0);
             agendamentoModel.setIdUsuario(preferences.getString("idUsuario", ""));
-            
+
+            agendamentoModel.setNomeUsuario(
+                    mainBinding.nomeField.getEditText().getText().toString()
+            );
+
             agendamentoModel.setHorario(
                     mainBinding.horarioField.getEditText().getText().toString()
             );
