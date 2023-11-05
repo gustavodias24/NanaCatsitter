@@ -183,5 +183,9 @@ public class LojaActivity extends AppCompatActivity {
             finish();
             startActivity(new Intent(getApplicationContext(), LojaActivity.class));
         });
+        mainBinding.acessarPontos.setOnClickListener( view -> {
+            finish();
+            startActivity(new Intent(getApplicationContext(), MoedasActivity.class));
+        });
     }
 }

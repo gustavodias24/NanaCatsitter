@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -35,6 +36,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import benicio.soluces.nanacatsitter.adapter.AdapterAgendamento;
+import benicio.soluces.nanacatsitter.adapter.BannerAdapter;
 import benicio.soluces.nanacatsitter.databinding.ActivityAreaPrincipalBinding;
 import benicio.soluces.nanacatsitter.databinding.ActivityCadastroBinding;
 import benicio.soluces.nanacatsitter.databinding.TrocarSenhaLayoutBinding;
@@ -89,8 +91,33 @@ public class AreaPrincipalActivity extends AppCompatActivity {
         });
 
         configurarMenu();
+
+        configurarBanner();
     }
 
+    private void configurarBanner(){
+        List<String> imageUrls = new ArrayList<>();
+        imageUrls.add("https://www.petz.com.br/blog//wp-content/uploads/2021/11/enxoval-para-gato-Copia.jpg");
+        imageUrls.add("https://chefbob.com.br/wp-content/uploads/2021/05/2021-05-12-como-deixar-os-gatos-mais-tranquilos.jpg");
+        imageUrls.add("https://www.petsupport.com.br/wp-content/uploads/2021/09/necessidades-dos-gatos-1.jpg");
+        ViewPager viewPager = mainBinding.viewPager;
+        BannerAdapter bannerAdapter = new BannerAdapter(this, imageUrls);
+        viewPager.setAdapter(bannerAdapter);
+
+        viewPager.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                int currentItem = viewPager.getCurrentItem();
+                int totalItems = bannerAdapter.getCount();
+                if (currentItem < totalItems - 1) {
+                    viewPager.setCurrentItem(currentItem + 1);
+                } else {
+                    viewPager.setCurrentItem(0);
+                }
+                viewPager.postDelayed(this, 3000); // 3000 milissegundos (3 segundos)
+            }
+        }, 3000);
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_principal, menu);
@@ -230,6 +257,10 @@ public class AreaPrincipalActivity extends AppCompatActivity {
         mainBinding.acessarStore.setOnClickListener( view -> {
             finish();
             startActivity(new Intent(getApplicationContext(), LojaActivity.class));
+        });
+        mainBinding.acessarPontos.setOnClickListener( view -> {
+            finish();
+            startActivity(new Intent(getApplicationContext(), MoedasActivity.class));
         });
     }
 
