@@ -186,6 +186,7 @@
             android:layout_marginBottom="4dp"
             android:backgroundTint="#F08087"
             android:backgroundTintMode="src_over"
+            android:inputType="phone"
             android:textColorHint="#FFFFFF" />
 
     </com.google.android.material.textfield.TextInputLayout>

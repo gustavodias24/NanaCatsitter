@@ -26,7 +26,7 @@
         app:layout_constraintTop_toBottomOf="@+id/viewPager" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:foregroundGravity="center_vertical"
         android:gravity="center"
